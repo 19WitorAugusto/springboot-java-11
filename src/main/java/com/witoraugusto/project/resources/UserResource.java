@@ -23,7 +23,7 @@ public class UserResource {
 		List<User> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
-	@GetMapping(value = "/{id}")
+	@GetMapping(value = "/{id}")//passando para url que ela tem um parametro
 	public ResponseEntity<User> findById(@PathVariable Long id){
 		User obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);

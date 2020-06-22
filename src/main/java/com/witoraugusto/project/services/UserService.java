@@ -11,7 +11,7 @@ import com.witoraugusto.project.repositories.UserRepository;
 
 @Service
 public class UserService {
-	@Autowired
+	@Autowired //fazer injeção transparente
 	private UserRepository repository;
 	
 	public List<User> findAll(){
