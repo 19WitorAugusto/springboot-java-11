@@ -12,68 +12,75 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.witoraugusto.project.entities.enums.OrderStatus;
 
 @Entity
 @Table(name = "tb_order")
 public class Order implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	//GARATI QUE O INSTANTE SEJA FORMATADO.
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
-	private Instant moment; // antes usadavamos date, apartir do java 8 susrgiu o instant
-
-	//criando associações EX:1 para muitos
 	
+	// GARATI QUE O INSTANTE SEJA FORMATADO.
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
+	private Instant moment; // antes usavamos date, apartir do java 8 susrgiu o instant
+	
+	private Integer orderStatus;
+
+	// criando associações EX:1 para muitos
 	@ManyToOne
 	@JoinColumn(name = "client_id")
 	private User client;
-	
-	
+
 	public Order() {
-		
+
 	}
 
-
-	public Order(Long id, Instant moment, User client) {
+	public Order(Long id, Instant moment, OrderStatus orderStatus, User client) {
 		super();
 		this.id = id;
 		this.moment = moment;
+		setOrderStatus(orderStatus);
 		this.client = client;
 	}
-
 
 	public Long getId() {
 		return id;
 	}
 
-
 	public void setId(Long id) {
 		this.id = id;
 	}
-
 
 	public Instant getMoment() {
 		return moment;
 	}
 
-
 	public void setMoment(Instant moment) {
 		this.moment = moment;
 	}
 
+	public OrderStatus getOrderStatus() {
+		return OrderStatus.valueOf(orderStatus);
+	}
+
+	public void setOrderStatus(OrderStatus orderStatus) {
+		if(orderStatus != null) {
+			this.orderStatus = orderStatus.getCode();
+		}
+		
+	}
 
 	public User getClient() {
 		return client;
 	}
 
-
 	public void setClient(User client) {
 		this.client = client;
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -82,7 +89,6 @@ public class Order implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -100,7 +106,5 @@ public class Order implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
-}
 
+}
