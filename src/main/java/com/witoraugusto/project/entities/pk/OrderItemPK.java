@@ -1,4 +1,4 @@
-package com.witoraugusto.project.entities.PK;
+package com.witoraugusto.project.entities.pk;
 
 import java.io.Serializable;
 
@@ -18,6 +18,7 @@ public class OrderItemPK implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "order_id")
 	private Order order;
+	
 	@ManyToOne
 	@JoinColumn(name = "product_id")
 	private Product product;
