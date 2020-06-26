@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.witoraugusto.project.entities.User;
 import com.witoraugusto.project.repositories.UserRepository;
+import com.witoraugusto.project.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class UserService {
@@ -21,7 +22,8 @@ public class UserService {
 	// retornando por ID
 	public User findById(Long id) {
 		Optional<User> obj = repository.findById(id);
-		return obj.get();
+		//return obj.get();
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 
 	// inserir no bd
